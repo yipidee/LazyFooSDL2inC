@@ -14,14 +14,14 @@ typedef struct LTexture
     int mHeight;
 } LTexture;
 
-
-LTexture LTexture_init();
+// Functions that operate on LTextures
+LTexture LTexture_create();
 
 void LTexture_destroy(LTexture* lt);
 
 bool LTexture_loadFromFile(LTexture *lt, SDL_Renderer* renderer, char* path );
 
-void LTexture_render( SDL_Renderer* renderer, LTexture* lt, int x, int y );
+void LTexture_render( LTexture* lt, SDL_Renderer* renderer, int x, int y );
 
 int LTexture_getWidth(LTexture *lt);
 

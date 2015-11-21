@@ -2,7 +2,7 @@
 #include <SDL_image.h>
 #include "LTexture.h"
 
-LTexture LTexture_init()
+LTexture LTexture_create()
 {
     //create and initialize an LTexture struct
     LTexture lt;
@@ -65,7 +65,7 @@ bool LTexture_loadFromFile(LTexture *lt, SDL_Renderer* renderer, char* path )
 	return lt->mTexture != NULL;
 }
 
-void LTexture_render( SDL_Renderer* renderer, LTexture* lt, int x, int y )
+void LTexture_render( LTexture* lt, SDL_Renderer* renderer, int x, int y )
 {
 	//Set rendering space and render to screen
 	SDL_Rect renderQuad = { x, y, lt->mWidth, lt->mHeight };

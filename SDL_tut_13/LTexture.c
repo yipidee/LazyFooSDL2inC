@@ -63,11 +63,34 @@ bool LTexture_loadFromFile(LTexture *lt, SDL_Renderer* renderer, char* path )
 	return lt->mTexture != NULL;
 }
 
-void LTexture_render( LTexture* lt, SDL_Renderer* renderer, int x, int y )
+void LTexture_setColor( LTexture* lt, Uint8 red, Uint8 green, Uint8 blue )
+{
+	//Modulate texture
+	SDL_SetTextureColorMod( lt->mTexture, red, green, blue );
+}
+
+void LTexture_render( LTexture* lt, SDL_Renderer* renderer, int x, int y, SDL_Rect* clip )
 {
 	//Set rendering space and render to screen
 	SDL_Rect renderQuad = { x, y, lt->mWidth, lt->mHeight };
-	SDL_RenderCopy( renderer, lt->mTexture, NULL, &renderQuad );
+
+	if(clip != NULL)
+    {
+        renderQuad.w = clip->w;
+        renderQuad.h = clip->h;
+    }
+
+	SDL_RenderCopy( renderer, lt->mTexture, clip, &renderQuad );
+}
+
+void LTexture_setBlendMode( LTexture* lt, SDL_BlendMode blending )
+{
+    SDL_SetTextureBlendMode( lt->mTexture, blending );
+}
+
+void LTexture_setAlpha( LTexture* lt, Uint8 alpha )
+{
+    SDL_SetTextureAlphaMod( lt->mTexture, alpha );
 }
 
 int LTexture_getWidth(LTexture *lt)

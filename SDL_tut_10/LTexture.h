@@ -5,6 +5,8 @@
 
 #include <SDL.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <SDL_image.h>
 
 // A structure to hold the LTEXTURE variables
 typedef struct LTexture

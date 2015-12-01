@@ -1,17 +1,19 @@
+#include <stdlib.h>
 #include "LTexture.h"
 
-LTexture LTexture_create()
+LTexture* LTexture_create()
 {
-    //create and initialize an LTexture struct
-    LTexture lt;
-    lt.mTexture = NULL;
-	lt.mWidth = 0;
-	lt.mHeight = 0;
+    //create LTexture in RAM
+    LTexture* lt = malloc(sizeof(LTexture));
+
+    lt->mTexture = NULL;
+	lt->mWidth = 0;
+	lt->mHeight = 0;
 
 	return lt;
 }
 
-void LTexture_destroy(LTexture* lt)
+void LTexture_reset(LTexture* lt)
 {
     if( lt->mTexture != NULL )
 	{
@@ -22,10 +24,16 @@ void LTexture_destroy(LTexture* lt)
 	}
 }
 
+void LTexture_destroy(LTexture* lt)
+{
+    LTexture_reset(lt);
+    free(lt);
+}
+
 bool LTexture_loadFromFile(LTexture *lt, SDL_Renderer* renderer, char* path )
 {
 	//Get rid of preexisting texture
-	LTexture_destroy(lt);
+	LTexture_reset(lt);
 
 	//The final texture
 	SDL_Texture* newTexture = NULL;

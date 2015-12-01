@@ -32,7 +32,7 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 //Scene texture
-LTexture gArrowTexture;
+LTexture* gArrowTexture;
 
 bool init()
 {
@@ -95,7 +95,7 @@ bool loadMedia()
 
 	//Load arrow
 	gArrowTexture = LTexture_create();
-	if( !LTexture_loadFromFile(&gArrowTexture, gRenderer, "arrow.png" ) )
+	if( !LTexture_loadFromFile(gArrowTexture, gRenderer, "arrow.png" ) )
 	{
 		printf( "Failed to load arrow texture!\n" );
 		success = false;
@@ -107,7 +107,7 @@ bool loadMedia()
 void close()
 {
 	//Free loaded images
-	LTexture_destroy(&gArrowTexture);
+	LTexture_destroy(gArrowTexture);
 
 	//Destroy window
 	SDL_DestroyRenderer( gRenderer );
@@ -191,7 +191,7 @@ int main( int argc, char* args[] )
 				SDL_RenderClear( gRenderer );
 
 				//Render arrow
-				LTexture_render(&gArrowTexture,gRenderer, ( SCREEN_WIDTH - LTexture_getWidth(&gArrowTexture) ) / 2, ( SCREEN_HEIGHT - LTexture_getHeight(&gArrowTexture) ) / 2, NULL, degrees, NULL, flipType );
+				LTexture_render(gArrowTexture, gRenderer, ( SCREEN_WIDTH - LTexture_getWidth(gArrowTexture) ) / 2, ( SCREEN_HEIGHT - LTexture_getHeight(gArrowTexture) ) / 2, NULL, degrees, NULL, flipType );
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );

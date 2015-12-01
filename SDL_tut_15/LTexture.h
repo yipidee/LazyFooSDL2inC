@@ -19,9 +19,12 @@ typedef struct LTexture
 // Functions that operate on LTextures
 
 // Creates and returns an initialised LTexture struct
-LTexture LTexture_create();
+LTexture* LTexture_create();
 
-//Destroys Texture and resets to initial state
+//Resets structure to NULL state
+void LTexture_reset(LTexture* lt);
+
+//Destroys Texture and frees memory
 void LTexture_destroy(LTexture* lt);
 
 //Populates struct members from specified image asset

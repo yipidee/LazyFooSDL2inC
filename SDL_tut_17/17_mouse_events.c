@@ -6,9 +6,13 @@ and may not be redistributed without written permission.*/
 #include <SDL_image.h>
 #include <stdio.h>
 #include "LTexture.h"
+#include "LButton.h"
 
 //Colour definitions in RGBA list format for SDL renderer
 #define COLOUR_BLACK 0xFF, 0xFF, 0xFF, 0xFF
+
+//define for no of buttons
+#define TOTAL_BUTTONS 4
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -17,7 +21,6 @@ const int SCREEN_HEIGHT = 480;
 //Button constants
 const int BUTTON_WIDTH = 300;
 const int BUTTON_HEIGHT = 200;
-const int TOTAL_BUTTONS = 4;
 
 //Starts up SDL and creates window
 bool init();
@@ -36,10 +39,10 @@ SDL_Renderer* gRenderer = NULL;
 
 //Mouse button sprites
 SDL_Rect gSpriteClips[ BUTTON_SPRITE_TOTAL ];
-LTexture gButtonSpriteSheetTexture;
+LTexture* gButtonSpriteSheetTexture;
 
 //Buttons objects
-LButton gButtons[ TOTAL_BUTTONS ];
+LButton* gButtons[ TOTAL_BUTTONS ];
 
 bool init()
 {
@@ -101,7 +104,8 @@ bool loadMedia()
 	bool success = true;
 
 	//Load sprites
-	if( !gButtonSpriteSheetTexture.loadFromFile( "button.png" ) )
+	gButtonSpriteSheetTexture = LTexture_create();
+	if( !LTexture_loadFromFile(gButtonSpriteSheetTexture, gRenderer, "button.png" ) )
 	{
 		printf( "Failed to load button sprite texture!\n" );
 		success = false;
@@ -109,7 +113,8 @@ bool loadMedia()
 	else
 	{
 		//Set sprites
-		for( int i = 0; i < BUTTON_SPRITE_TOTAL; ++i )
+		int i;
+		for( i = 0; i < BUTTON_SPRITE_TOTAL; ++i )
 		{
 			gSpriteClips[ i ].x = 0;
 			gSpriteClips[ i ].y = i * 200;
@@ -118,10 +123,14 @@ bool loadMedia()
 		}
 
 		//Set buttons in corners
-		gButtons[ 0 ].setPosition( 0, 0 );
-		gButtons[ 1 ].setPosition( SCREEN_WIDTH - BUTTON_WIDTH, 0 );
-		gButtons[ 2 ].setPosition( 0, SCREEN_HEIGHT - BUTTON_HEIGHT );
-		gButtons[ 3 ].setPosition( SCREEN_WIDTH - BUTTON_WIDTH, SCREEN_HEIGHT - BUTTON_HEIGHT );
+		gButtons[ 0 ] = LButton_create(gButtonSpriteSheetTexture, &gSpriteClips, BUTTON_WIDTH, BUTTON_HEIGHT);
+		LButton_setPosition(gButtons[0], 0, 0);
+		gButtons[ 1 ] = LButton_create(gButtonSpriteSheetTexture, &gSpriteClips, BUTTON_WIDTH, BUTTON_HEIGHT);
+		LButton_setPosition(gButtons[1], SCREEN_WIDTH - BUTTON_WIDTH, 0);
+		gButtons[ 2 ] = LButton_create(gButtonSpriteSheetTexture, &gSpriteClips, BUTTON_WIDTH, BUTTON_HEIGHT);
+		LButton_setPosition(gButtons[2], 0, SCREEN_HEIGHT - BUTTON_HEIGHT);
+		gButtons[ 3 ] = LButton_create(gButtonSpriteSheetTexture, &gSpriteClips, BUTTON_WIDTH, BUTTON_HEIGHT);
+		LButton_setPosition(gButtons[3], SCREEN_WIDTH - BUTTON_WIDTH, SCREEN_HEIGHT - BUTTON_HEIGHT);
 	}
 
 	return success;
@@ -130,7 +139,14 @@ bool loadMedia()
 void close()
 {
 	//Free loaded images
-	gButtonSpriteSheetTexture.free();
+	LTexture_destroy(gButtonSpriteSheetTexture);
+
+	//Free memory associated with buttons
+	int i;
+	for(i=0; i<TOTAL_BUTTONS; ++i)
+    {
+        LButton_destroy(gButtons[i] );
+	}
 
 	//Destroy window
 	SDL_DestroyRenderer( gRenderer );
@@ -178,9 +194,10 @@ int main( int argc, char* args[] )
 					}
 
 					//Handle button events
-					for( int i = 0; i < TOTAL_BUTTONS; ++i )
+					int i;
+					for( i = 0; i < TOTAL_BUTTONS; ++i )
 					{
-						gButtons[ i ].handleEvent( &e );
+						LButton_handleEvent(gButtons[ i ], &e );
 					}
 				}
 
@@ -189,9 +206,10 @@ int main( int argc, char* args[] )
 				SDL_RenderClear( gRenderer );
 
 				//Render buttons
-				for( int i = 0; i < TOTAL_BUTTONS; ++i )
+				int i;
+				for( i = 0; i < TOTAL_BUTTONS; ++i )
 				{
-					gButtons[ i ].render();
+					LButton_render(gButtons[ i ], gRenderer);
 				}
 
 				//Update screen

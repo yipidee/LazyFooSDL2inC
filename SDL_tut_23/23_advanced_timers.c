@@ -194,6 +194,9 @@ int main( int argc, char* args[] )
 			int buffSize = 45;
 			char buff[buffSize];
 
+			//initialise gTimeTextTexture
+			gTimeTextTexture = LTexture_create();
+
 			//While application is running
 			while( !quit )
 			{
@@ -242,22 +245,24 @@ int main( int argc, char* args[] )
                 {
                     printf("Oh dear, we have a problem with buffer size\n");
                 }
+                else
+                {
+                    //Render text
+                    if( !LTexture_loadFromRenderedText(gTimeTextTexture, gRenderer, buff, gFont, textColor ) )
+                    {
+                        printf( "Unable to render time texture!\n" );
+                    }
 
-				//Render text
-				gTimeTextTexture = LTexture_create();
-				if( !LTexture_loadFromRenderedText(gTimeTextTexture, gRenderer, buff, gFont, textColor ) )
-				{
-					printf( "Unable to render time texture!\n" );
-				}
+                    //Clear screen
+                    SDL_SetRenderDrawColor( gRenderer, COLOUR_BLACK );
+                    SDL_RenderClear( gRenderer );
 
-				//Clear screen
-				SDL_SetRenderDrawColor( gRenderer, COLOUR_BLACK );
-				SDL_RenderClear( gRenderer );
+                    //Render textures
+                    LTexture_render(gStartPromptTexture, gRenderer, ( SCREEN_WIDTH - LTexture_getWidth(gStartPromptTexture) ) / 2, 0 , NULL, 0, NULL, 0);
+                    LTexture_render(gPausePromptTexture, gRenderer, ( SCREEN_WIDTH - LTexture_getWidth(gPausePromptTexture) ) / 2, LTexture_getHeight(gStartPromptTexture), NULL, 0, NULL, 0 );
+                    LTexture_render(gTimeTextTexture, gRenderer, ( SCREEN_WIDTH - LTexture_getWidth(gTimeTextTexture) ) / 2, ( SCREEN_HEIGHT - LTexture_getHeight(gTimeTextTexture) ) / 2, NULL, 0, NULL, 0 );
 
-				//Render textures
-				LTexture_render(gStartPromptTexture, gRenderer, ( SCREEN_WIDTH - LTexture_getWidth(gStartPromptTexture) ) / 2, 0 , NULL, 0, NULL, 0);
-				LTexture_render(gPausePromptTexture, gRenderer, ( SCREEN_WIDTH - LTexture_getWidth(gPausePromptTexture) ) / 2, LTexture_getHeight(gStartPromptTexture), NULL, 0, NULL, 0 );
-				LTexture_render(gTimeTextTexture, gRenderer, ( SCREEN_WIDTH - LTexture_getWidth(gTimeTextTexture) ) / 2, ( SCREEN_HEIGHT - LTexture_getHeight(gTimeTextTexture) ) / 2, NULL, 0, NULL, 0 );
+                }
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );

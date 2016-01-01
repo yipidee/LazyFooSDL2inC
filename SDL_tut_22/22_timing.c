@@ -182,6 +182,9 @@ int main( int argc, char* args[] )
             int buffSize = 40;
             char buff[buffSize];
 
+            // initialise gTimeTextTexture
+            gTimeTextTexture = LTexture_create();
+
 			//While application is running
 			while( !quit )
 			{
@@ -205,14 +208,14 @@ int main( int argc, char* args[] )
                 {
                     printf("That did not go very well...");
                 }
-
-				//Render text
-				gTimeTextTexture = LTexture_create();
-				if( !LTexture_loadFromRenderedText(gTimeTextTexture, gRenderer, buff, gFont, textColor ) )
-				{
-					printf( "Unable to render time texture!\n" );
-				}
-
+                else
+                {
+                    //Render text
+                    if( !LTexture_loadFromRenderedText(gTimeTextTexture, gRenderer, buff, gFont, textColor ) )
+                    {
+                        printf( "Unable to render time texture!\n" );
+                    }
+                }
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, COLOUR_BLACK );
 				SDL_RenderClear( gRenderer );

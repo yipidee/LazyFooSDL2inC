@@ -9,39 +9,24 @@ static const int DOT_HEIGHT = 20;
 static const int DOT_VEL = 10;
 
 //Initializes the variables
-Dot* Dot_create(LTexture* lt, int screenW, int screenH)
+Dot Dot_create(const LTexture* lt, const int screenW, const int screenH)
 {
     //Initialize the offsets
-    Dot* d = malloc(sizeof(Dot));
-    if(d!=NULL)
-    {
-        d->mPosX = 0;
-        d->mPosY = 0;
+    Dot d;
 
-        //Initialize the velocity
-        d->mVelX = 0;
-        d->mVelY = 0;
+    d.mPosX = 0;
+    d.mPosY = 0;
 
-        d->screenH=screenH;
-        d->screenW=screenW;
+    //Initialize the velocity
+    d.mVelX = 0;
+    d.mVelY = 0;
 
-        d->mDotTexture = lt;
+    d.screenH=screenH;
+    d.screenW=screenW;
 
-        return d;
-    }
-    else
-    {
-        return NULL;
-    }
-}
+    d.mDotTexture = lt;
 
-/*This function does not free the Texture!!!!!*/
-void Dot_destroy(Dot* dot)
-{
-    if(dot!=NULL)
-    {
-        free(dot);
-    }
+    return d;
 }
 
 //Takes key presses and adjusts the dot's velocity
@@ -99,7 +84,7 @@ void Dot_move(Dot* dot)
 }
 
 //Shows the dot on the screen
-void Dot_render(Dot* dot, SDL_Renderer* renderer)
+void Dot_render(const Dot dot, const SDL_Renderer* renderer)
 {
-    LTexture_render(dot->mDotTexture, renderer, dot->mPosX, dot->mPosY, NULL, 0, NULL, 0 );
+    LTexture_render(dot.mDotTexture, renderer, dot.mPosX, dot.mPosY, NULL, 0, NULL, 0 );
 }

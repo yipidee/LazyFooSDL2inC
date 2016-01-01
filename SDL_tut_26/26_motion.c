@@ -142,7 +142,7 @@ int main( int argc, char* args[] )
 			SDL_Event e;
 
 			//The dot that will be moving around on the screen
-			Dot* dot = Dot_create(gDotTexture, SCREEN_WIDTH, SCREEN_HEIGHT);
+			Dot dot = Dot_create(gDotTexture, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 			//While application is running
 			while( !quit )
@@ -157,11 +157,11 @@ int main( int argc, char* args[] )
 					}
 
 					//Handle input for the dot
-					Dot_handleEvent(dot, &e );
+					Dot_handleEvent(&dot, &e );
 				}
 
 				//Move the dot
-				Dot_move(dot);
+				Dot_move(&dot);
 
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, COLOUR_BLACK );
@@ -173,7 +173,6 @@ int main( int argc, char* args[] )
 				//Update screen
 				SDL_RenderPresent( gRenderer );
 			}
-			Dot_destroy(dot);
 		}
 	}
 

@@ -221,6 +221,7 @@ int main( int argc, char* args[] )
 				SDL_RenderPresent( gRenderer );
 				++countedFrames;
 			}
+			LTimer_destroy(fpsTimer);
 		}
 	}
 

@@ -14,8 +14,7 @@ typedef struct Dot
 } Dot;
 
 //Initializes the variables
-Dot* Dot_create(LTexture* lt, int screenW, int screenH);
-void Dot_destroy(Dot* dot);
+Dot Dot_create(const LTexture* lt, const int screenW, const int screenH);
 
 //Takes key presses and adjusts the dot's velocity
 void Dot_handleEvent(Dot* dot, SDL_Event* ep );
@@ -24,4 +23,4 @@ void Dot_handleEvent(Dot* dot, SDL_Event* ep );
 void Dot_move(Dot* dot);
 
 //Shows the dot on the screen
-void Dot_render(Dot* dot, SDL_Renderer* renderer);
+void Dot_render(const Dot dot, const SDL_Renderer* renderer);

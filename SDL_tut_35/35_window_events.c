@@ -2,8 +2,8 @@
 and may not be redistributed without written permission.*/
 
 //Using SDL, SDL_image, standard IO, strings, and string streams
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL.h>
+#include <SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "LTexture.h"

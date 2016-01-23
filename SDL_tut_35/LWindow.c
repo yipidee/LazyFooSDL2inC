@@ -108,10 +108,10 @@ void LWindow_handleEvent( LWindow* win, SDL_Renderer* renderer, SDL_Event* event
 		//Update window caption with new data
 		if( updateCaption )
 		{
-			int capLen = 50;
+			int capLen = 51;
 			char caption[capLen];
 
-			snprintf(caption, capLen, "SDL Tutorial - MouseFocus: %s, KeyboardFocus: %s, ", win->mMouseFocus ? "On" : "Off", win->mKeyboardFocus ? "On" : "Off");
+			snprintf(caption, capLen, "SDL Tutorial - MouseFocus: %s, KeyboardFocus: %s ", win->mMouseFocus ? "On" : "Off", win->mKeyboardFocus ? "On" : "Off");
 			SDL_SetWindowTitle( win->mWindow, caption );
 		}
 	}

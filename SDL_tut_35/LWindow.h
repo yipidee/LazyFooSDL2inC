@@ -1,4 +1,3 @@
-
 #ifdef __linux
 #include <SDL2/SDL.h>
 #elif _WIN32

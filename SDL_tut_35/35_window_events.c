@@ -2,10 +2,16 @@
 and may not be redistributed without written permission.*/
 
 //Using SDL, SDL_image, standard IO, strings, and string streams
+#ifdef __linux
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#elif _WIN32
+#include <SDL.h>
+#include <SDL_image.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "LTexture.h"
 #include "LWindow.h"
 
@@ -23,16 +29,16 @@ bool init();
 bool loadMedia();
 
 //Frees media and shuts down SDL
-void close();
+void my_close();
 
 //Our custom window
-LWindow* gWindow;
+LWindow* gWindow = NULL;
 
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
 
 //Scene textures
-LTexture* gSceneTexture;
+LTexture* gSceneTexture = NULL;
 
 
 bool init()
@@ -105,7 +111,7 @@ bool loadMedia()
 	return success;
 }
 
-void close()
+void my_close()
 {
 	//Free loaded images
 	LTexture_destroy(gSceneTexture);
@@ -175,7 +181,7 @@ int main( int argc, char* args[] )
 	}
 
 	//Free resources and close SDL
-	close();
+	my_close();
 
 	return 0;
 }

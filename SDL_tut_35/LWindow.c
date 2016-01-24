@@ -137,7 +137,6 @@ void LWindow_free(LWindow* win)
 {
 	if( win->mWindow != NULL )
 	{
-
 		SDL_DestroyWindow( win->mWindow );
 	}
 

@@ -3,9 +3,15 @@
 #ifndef LTEXTURE_H
 #define LTEXTURE_H
 
+#ifdef __linux
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#elif _WIN32
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#endif
 #include <stdbool.h>
 #include <stdio.h>
 

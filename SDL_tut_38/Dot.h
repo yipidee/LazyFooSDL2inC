@@ -24,11 +24,11 @@ typedef struct Dot
     //Texture
     LTexture* mDotTexture;
     //The particles
-    Particle* particles[ TOTAL_PARTICLES ];
+    Particle particles[ TOTAL_PARTICLES ];
 } Dot;
 
 //Initializes the variables
-Dot Dot_create(LTexture* lt, LTexture** colours);
+Dot Dot_create(LTexture* lt, int screenW, int screenH, LTexture** colours);
 
 //Takes key presses and adjusts the dot's velocity
 void Dot_handleEvent(Dot* dot, SDL_Event* ep );

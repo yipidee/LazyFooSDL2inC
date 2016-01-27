@@ -194,7 +194,7 @@ int main( int argc, char* args[] )
 			LTexture* colours[] = {gGreenTexture, gRedTexture, gBlueTexture};
 
 			//The dot that will be moving around on the screen
-			Dot dot = Dot_create(gDotTexture, colours);
+			Dot dot = Dot_create(gDotTexture, SCREEN_WIDTH, SCREEN_HEIGHT, colours);
 
 			//While application is running
 			while( !quit )

@@ -10,7 +10,7 @@ const int DOT_HEIGHT = 20;
 
 
 //Initializes the variables
-Dot Dot_create(LTexture* lt, LTexture** colours)
+Dot Dot_create(LTexture* lt, int screenW, int screenH, LTexture** colours)
 {
     Dot d;
     //Initialize the offsets
@@ -22,6 +22,9 @@ Dot Dot_create(LTexture* lt, LTexture** colours)
     d.mVelY = 0;
 
     d.mDotTexture = lt;
+
+    d.screenH = screenH;
+    d.screenW = screenW;
 
     //Initialize particles
     int i;
@@ -100,13 +103,15 @@ void Dot_render( Dot dot, SDL_Renderer* renderer, LTexture** colours, LTexture* 
 void Dot_renderParticles(Dot dot, SDL_Renderer* renderer, LTexture** colours, LTexture* gShimmerTexture)
 {
 	//Go through particles
+	static int count = 0;
 	int i;
     for( i = 0; i < TOTAL_PARTICLES; ++i )
     {
         //Delete and replace dead particles
         if( Particle_isDead(dot.particles[ i ]) )
         {
-            free(dot.particles[ i ]);
+            printf("%i, %i\n", i, count);
+            ++count;
             dot.particles[ i ] = Particle_create( dot.mPosX, dot.mPosY, colours );
         }
     }

@@ -22,12 +22,12 @@ typedef struct Particle
 } Particle;
 
 //Initialize position and animation
-Particle* Particle_create( int x, int y, LTexture** colours );
+Particle Particle_create( int x, int y, LTexture** colours );
 
 //Shows the particle
-void Particle_render(Particle* p, SDL_Renderer* renderer, LTexture* gShimmerTexture);
+void Particle_render(Particle p, SDL_Renderer* renderer, LTexture* gShimmerTexture);
 
 //Checks if particle is dead
-bool Particle_isDead(Particle* p);
+bool Particle_isDead(Particle p);
 
 #endif // PARTICLE_H

@@ -90,35 +90,32 @@ void Dot_move(Dot* dot)
     }
 }
 
-//Shows the dot on the screen
-void Dot_render( Dot dot, SDL_Renderer* renderer, LTexture** colours, LTexture* gShimmerTexture)
+//Shows the dot op->mFramen the screen
+void Dot_render( Dot* dot, SDL_Renderer* renderer, LTexture** colours, LTexture* gShimmerTexture)
 {
     //Show the dot
-	LTexture_render(dot.mDotTexture, renderer, dot.mPosX, dot.mPosY, NULL, 0, NULL, 0 );
+	LTexture_render(dot->mDotTexture, renderer, dot->mPosX, dot->mPosY, NULL, 0, NULL, 0 );
 
 	//Show particles on top of dot
 	Dot_renderParticles(dot, renderer, colours, gShimmerTexture);
 }
 
-void Dot_renderParticles(Dot dot, SDL_Renderer* renderer, LTexture** colours, LTexture* gShimmerTexture)
+void Dot_renderParticles(Dot* dot, SDL_Renderer* renderer, LTexture** colours, LTexture* gShimmerTexture)
 {
 	//Go through particles
-	static int count = 0;
 	int i;
     for( i = 0; i < TOTAL_PARTICLES; ++i )
     {
         //Delete and replace dead particles
-        if( Particle_isDead(dot.particles[ i ]) )
+        if( Particle_isDead(dot->particles[ i ]) )
         {
-            printf("%i, %i\n", i, count);
-            ++count;
-            dot.particles[ i ] = Particle_create( dot.mPosX, dot.mPosY, colours );
+            dot->particles[ i ] = Particle_create( dot->mPosX, dot->mPosY, colours );
         }
     }
 
     //Show particles
     for( i = 0; i < TOTAL_PARTICLES; ++i )
     {
-        Particle_render(dot.particles[ i ], renderer, gShimmerTexture);
+        Particle_render(&dot->particles[ i ], renderer, gShimmerTexture);
     }
 }

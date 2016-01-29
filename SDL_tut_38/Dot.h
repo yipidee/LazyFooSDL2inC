@@ -37,9 +37,9 @@ void Dot_handleEvent(Dot* dot, SDL_Event* ep );
 void Dot_move(Dot* dot );
 
 //Shows the dot on the screen
-void Dot_render(Dot dot, SDL_Renderer* renderer, LTexture** colours, LTexture* gShimmerTexture);
+void Dot_render(Dot* dot, SDL_Renderer* renderer, LTexture** colours, LTexture* gShimmerTexture);
 
 //Shows the particles
-void Dot_renderParticles(Dot dot, SDL_Renderer* renderer, LTexture** colours, LTexture* gShimmerTexture);
+void Dot_renderParticles(Dot* dot, SDL_Renderer* renderer, LTexture** colours, LTexture* gShimmerTexture);
 
 #endif // DOT_H

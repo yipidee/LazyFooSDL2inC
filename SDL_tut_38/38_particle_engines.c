@@ -220,7 +220,7 @@ int main( int argc, char* args[] )
 				SDL_RenderClear( gRenderer );
 
 				//Render objects
-				Dot_render(dot, gRenderer, colours, gShimmerTexture);
+				Dot_render(&dot, gRenderer, colours, gShimmerTexture);
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );

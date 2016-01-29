@@ -25,7 +25,7 @@ typedef struct Particle
 Particle Particle_create( int x, int y, LTexture** colours );
 
 //Shows the particle
-void Particle_render(Particle p, SDL_Renderer* renderer, LTexture* gShimmerTexture);
+void Particle_render(Particle* p, SDL_Renderer* renderer, LTexture* gShimmerTexture);
 
 //Checks if particle is dead
 bool Particle_isDead(Particle p);
